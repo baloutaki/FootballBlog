@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Football blog</title>
+    <!--needed for mobile -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!--css -->
+    <link rel="stylesheet" href="css/bootstrap-reboot.css">
+    <link rel="stylesheet" href="CSS/main.css">
+    <!-- needed for bootstrap-->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <!--JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+            integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+            crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+            integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+            crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+            integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+            crossorigin="anonymous"></script>
+    <script>
+        $(document).ready(function () {
+            $('#products_table').DataTable({
+                "paging": false,
+                "info": false,
+                "lengthChange": false,
+                "searching": true,
+                "ordering": false
+            });
+        });
+    </script>
+
+</head>
+<body>
+<nav>
+    <h1>Football Blog</h1>
+</nav>
+</tbody>
+</table>
+<div class="fluid-container">
+    <form th:action="@{~/index}" method="post" th:object="${nUser}">
+        <div class="form-group">
+            <label for="userName" th:text="#{col_name}"></label>
+            <input type="text" th:field="*{userName}" id="userName" th:placeholder="#{pholder}">
+            <span th:if="${#fields.hasErrors('userName')}" th:errors="*{userName}" class="error"></span>
+        </div>
+        <div class="form-group">
+            <label for="comment" th:text="#{col_comment}"></label>
+            <textarea th:field="*{comment}" id="comment" class="form-control" rows="5"
+                      th:placeholder="#{placeholder}"></textarea>
+            <span th:if="${#fields.hasErrors('comment')}" th:errors="*{comment}" class="error"></span>
+        </div>
+        <input type="submit" th:value="#{submit}" class="btn btn-outline-primary"></input>
+    </form>
+</div>
+    <div th:each="user:${alleUsers}">
+        <p th:text="${user.userName}"></p>
+        <p th:text="${user.comment}"></p>
+        <p th:text="${user.time}"></p>
+        <p><a th:href="@{~/delete/{id}(id=${user.id})}" th:text="#{delete}"></a></p>
+    </div>
+
+</body>
+</html>
